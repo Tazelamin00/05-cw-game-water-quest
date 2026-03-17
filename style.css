@@ -50,6 +50,7 @@ body {
 }
 
 .container {
+  position: relative;
   max-width: 750px;
   margin: 24px auto;
   background: linear-gradient(180deg, rgba(14, 17, 23, 0.98), rgba(8, 10, 14, 0.98));
@@ -57,6 +58,33 @@ body {
   border-radius: 24px;
   box-shadow: var(--cw-shadow);
   border: 2px solid rgba(255, 201, 7, 0.22);
+  overflow: hidden;
+}
+
+.container.is-celebrating {
+  animation: winPulse 0.55s ease 3;
+}
+
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.confetti-piece {
+  --confetti-color: var(--cw-yellow);
+  position: absolute;
+  top: -16px;
+  width: 10px;
+  height: 18px;
+  border-radius: 3px;
+  background: var(--confetti-color);
+  opacity: 0.92;
+  animation-name: confettiFall;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.26, 1);
+  animation-fill-mode: forwards;
 }
 
 .game-header {
@@ -70,6 +98,11 @@ body {
   width: min(220px, 42vw);
   height: auto;
   flex-shrink: 0;
+  display: block;
+  background: var(--cw-white);
+  padding: 10px 12px;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
 }
 
 .title-block {
@@ -142,6 +175,10 @@ h1 {
   border-left-color: var(--cw-red);
 }
 
+.achievement.is-penalty {
+  border-left-color: var(--cw-red);
+}
+
 .game-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -191,12 +228,72 @@ h1 {
   transform-origin: center;
 }
 
+.bomb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  background: radial-gradient(circle at 28% 30%, #6d727b 2%, #232831 36%, #090b0f 80%);
+  border: 3px solid #11141a;
+  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.4);
+  position: relative;
+  animation: popUp 0.5s cubic-bezier(0.17, 0.67, 0.34, 2);
+}
+
+.bomb::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 8px;
+  border-radius: 99px;
+  border: 2px solid #f16061;
+  border-bottom: none;
+  top: -7px;
+  right: 10px;
+  transform: rotate(24deg);
+}
+
+.bomb::after {
+  content: '!';
+  position: absolute;
+  color: #ffc907;
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @keyframes popUp {
   0% {
     transform: scale(0.5);
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-30px) rotate(0deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(520px) rotate(640deg);
+    opacity: 0.12;
+  }
+}
+
+@keyframes winPulse {
+  0% {
+    box-shadow: 0 0 0 rgba(79, 203, 83, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(79, 203, 83, 0.22);
+  }
+  100% {
+    box-shadow: var(--cw-shadow);
   }
 }
 
@@ -210,10 +307,28 @@ button {
   font-weight: 800;
   border-radius: 999px;
   cursor: pointer;
-  display: block;
-  margin: 30px auto 0;
+  display: inline-block;
+  margin: 0;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 10px 20px rgba(255, 201, 7, 0.28);
+}
+
+.controls {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+#reset-game {
+  background: linear-gradient(135deg, #212935, #323d4f);
+  color: var(--cw-ink);
+  box-shadow: 0 10px 20px rgba(9, 12, 16, 0.35);
+}
+
+#reset-game:hover {
+  box-shadow: 0 14px 22px rgba(9, 12, 16, 0.42);
 }
 
 button:hover {

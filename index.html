@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="container">
+    <div class="confetti-layer" aria-hidden="true"></div>
     <header class="game-header">
       <img class="brand-logo" src="img/cw_logo_horizontal.png" alt="charity: water logo">
       <div class="title-block">
@@ -15,14 +16,17 @@
         <h1>Collect clean water before time runs out.</h1>
       </div>
     </header>
-    <p class="game-instructions">Click as many jerry cans as you can in 30 seconds. Reach 20 points to win.</p>
+    <p class="game-instructions">Click as many jerry cans as you can in 30 seconds. Reach 20 points to win, and avoid the bombs.</p>
     <div class="stats">
       <p>Score: <span id="current-cans">0</span></p>
       <p>Time Left: <span id="timer">30</span>s</p>
     </div>
     <div id="achievements" class="achievement" aria-live="polite">Press start to begin your 30-second round.</div>
     <div class="game-grid"></div>
-    <button id="start-game">Start Game</button>
+    <div class="controls">
+      <button id="start-game">Start Game</button>
+      <button id="reset-game" type="button">Reset Round</button>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
