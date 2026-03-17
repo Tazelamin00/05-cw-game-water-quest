@@ -8,13 +8,19 @@
 </head>
 <body>
   <div class="container">
-    <h1>Water Quest</h1>
-    <p class="game-instructions">Collect 20 items to complete the game!</p>
+    <header class="game-header">
+      <img class="brand-logo" src="img/cw_logo_horizontal.png" alt="charity: water logo">
+      <div class="title-block">
+        <p class="eyebrow">Water Quest</p>
+        <h1>Collect clean water before time runs out.</h1>
+      </div>
+    </header>
+    <p class="game-instructions">Click as many jerry cans as you can in 30 seconds. Reach 20 points to win.</p>
     <div class="stats">
-      <p>Cans Collected: <span id="current-cans">0</span></p>
+      <p>Score: <span id="current-cans">0</span></p>
       <p>Time Left: <span id="timer">30</span>s</p>
     </div>
-    <div id="achievements" class="achievement"></div>
+    <div id="achievements" class="achievement" aria-live="polite">Press start to begin your 30-second round.</div>
     <div class="game-grid"></div>
     <button id="start-game">Start Game</button>
   </div>
