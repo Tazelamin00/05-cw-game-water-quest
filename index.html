@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Water Quest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -16,18 +17,44 @@
         <h1>Collect clean water before time runs out.</h1>
       </div>
     </header>
-    <p class="game-instructions">Click as many jerry cans as you can in 30 seconds. Reach 20 points to win, and avoid the bombs.</p>
-    <div class="stats">
-      <p>Score: <span id="current-cans">0</span></p>
-      <p>Time Left: <span id="timer">30</span>s</p>
-    </div>
-    <div id="achievements" class="achievement" aria-live="polite">Press start to begin your 30-second round.</div>
-    <div class="game-grid"></div>
+    <section class="game-setup">
+      <p id="game-instructions" class="game-instructions">Select a difficulty and press <b>Start Game</b>. Click as many jerry cans as you can before time runs out. Avoid bombs!</p>
+      <div class="difficulty-controls" aria-label="Difficulty selection">
+        <label for="difficulty-select">Difficulty:</label>
+        <select id="difficulty-select" aria-label="Choose game difficulty">
+          <option value="easy">Easy</option>
+          <option value="normal" selected>Normal</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+    </section>
+    <section class="stats-panel">
+      <div class="stats" aria-label="Game stats">
+        <div class="stat-block"><span class="stat-label">Score</span><span id="current-cans" class="stat-value">0</span></div>
+        <div class="stat-block"><span class="stat-label">Target</span><span id="target-score" class="stat-value">20</span></div>
+        <div class="stat-block"><span class="stat-label">Time Left</span><span id="timer" class="stat-value">30</span><span class="stat-unit">s</span></div>
+      </div>
+    </section>
+    <div id="achievements" class="achievement" aria-live="polite">Press <b>Start Game</b> to begin your 30-second round.</div>
+    <div class="game-grid" aria-label="Game grid"></div>
     <div class="controls">
-      <button id="start-game">Start Game</button>
-      <button id="reset-game" type="button">Reset Round</button>
+      <button id="start-game" aria-label="Start the game">Start Game</button>
+      <button id="reset-game" type="button" aria-label="Reset the round">Reset Round</button>
     </div>
   </div>
+  <!-- Audio elements for game feedback -->
+  <audio id="audio-collect" src="img/audio-collect.mp3" preload="auto"></audio>
+  <audio id="audio-bomb" src="img/audio-bomb.mp3" preload="auto"></audio>
+  <audio id="audio-win" src="img/audio-win.mp3" preload="auto"></audio>
+  <audio id="audio-tick" src="img/audio-tick.mp3" preload="auto"></audio>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>Learn more at </span>
+      <a href="https://www.charitywater.org/" target="_blank" rel="noopener">charity: water</a>
+      <span> | </span>
+      <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener" class="donate-link">Donate</a>
+    </div>
+  </footer>
   <script src="script.js"></script>
 </body>
 </html>

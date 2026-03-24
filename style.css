@@ -1,3 +1,38 @@
+/* Footer styles */
+.site-footer {
+  width: 100%;
+  margin-top: 38px;
+  padding: 22px 0 10px 0;
+  background: linear-gradient(90deg, rgba(46,157,247,0.10), rgba(255,201,7,0.10));
+  text-align: center;
+  font-size: 17px;
+  color: var(--cw-ink);
+  border-top: 2px solid rgba(255,201,7,0.13);
+}
+
+.footer-content {
+  display: inline-block;
+  background: rgba(14,17,23,0.92);
+  border-radius: 12px;
+  padding: 10px 22px;
+  box-shadow: 0 2px 8px rgba(46,157,247,0.08);
+}
+
+.site-footer a {
+  color: var(--cw-yellow);
+  text-decoration: underline;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.site-footer a:hover, .site-footer .donate-link:hover {
+  color: var(--cw-blue);
+}
+
+.site-footer .donate-link {
+  color: var(--cw-green);
+  font-weight: 800;
+}
 /* Charity: water Brand Colors & Fonts
 
 Primary Colors:
@@ -38,15 +73,21 @@ Fonts:
 }
 
 body {
-  font-family: "Avenir Next", Avenir, "Trebuchet MS", sans-serif;
+  font-family: 'Montserrat', 'Avenir Next', Avenir, 'Trebuchet MS', sans-serif;
   margin: 0;
   min-height: 100vh;
   padding: 24px;
   background:
+    linear-gradient(0deg, rgba(255,255,255,0.22), rgba(255,255,255,0.16)),
     radial-gradient(circle at top left, rgba(255, 201, 7, 0.2), transparent 24%),
     radial-gradient(circle at bottom right, rgba(46, 157, 247, 0.16), transparent 30%),
     linear-gradient(180deg, #020304 0%, #0a0d12 46%, #111722 100%);
   color: var(--cw-ink);
+}
+
+/* Ensure all text uses the brand font */
+.container, .game-header, .game-instructions, .stats, .achievement, .game-grid, .site-footer, .footer-content, button, select, label, h1, h2, h3, h4, h5, h6, p, a, span {
+  font-family: 'Montserrat', 'Avenir Next', Avenir, 'Trebuchet MS', sans-serif;
 }
 
 .container {
@@ -90,19 +131,20 @@ body {
 .game-header {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 10px;
+  min-height: 48px;
 }
 
 .brand-logo {
-  width: min(220px, 42vw);
+  width: min(90px, 22vw);
   height: auto;
   flex-shrink: 0;
   display: block;
   background: var(--cw-white);
-  padding: 10px 12px;
-  border-radius: 12px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  padding: 4px 6px;
+  border-radius: 7px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.13);
 }
 
 .title-block {
@@ -120,16 +162,97 @@ body {
 
 h1 {
   margin: 0;
-  font-size: clamp(2rem, 4vw, 3.1rem);
-  line-height: 1.05;
+  font-size: 1.18rem;
+  line-height: 1.13;
   color: var(--cw-ink);
+}
+
+
+.game-setup {
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid rgba(255,255,255,0.07);
 }
 
 .game-instructions {
   font-size: 18px;
-  margin: 0 0 24px;
+  margin: 0 0 14px 0;
   text-align: left;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: var(--cw-ink);
+  letter-spacing: 0.01em;
+}
+
+.difficulty-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.difficulty-controls label {
+  font-weight: 700;
+  color: var(--cw-blue);
+}
+
+.difficulty-controls select {
+  font-size: 16px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--cw-blue);
+  background: var(--cw-panel-soft);
+  color: var(--cw-ink);
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.difficulty-controls select:focus {
+  border-color: var(--cw-yellow);
+}
+
+.stats-panel {
+  margin: 18px 0 10px 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  background: linear-gradient(135deg, rgba(46, 157, 247, 0.13), rgba(255, 201, 7, 0.09));
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 8px rgba(46,157,247,0.04);
+}
+
+.stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--cw-blue);
+  font-weight: 700;
+  margin-bottom: 2px;
+  letter-spacing: 0.04em;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--cw-yellow);
+  margin-bottom: 0;
+}
+
+.stat-unit {
+  font-size: 13px;
+  color: var(--cw-ink);
+  margin-left: 2px;
 }
 
 .stats {
@@ -182,27 +305,35 @@ h1 {
 .game-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  gap: 8px;
   margin: 0 auto;
-  max-width: 520px;
+  max-width: 270px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(46,157,247,0.09), 0 2px 0 #eee;
+  padding: 12px;
 }
 
 .grid-cell {
-  background: linear-gradient(180deg, rgba(23, 27, 34, 0.96), rgba(12, 15, 20, 0.96));
-  border: 2px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
+  background: #fff;
+  border: 2px solid #e6e6e6;
+  border-radius: 10px;
   aspect-ratio: 1;
+  min-width: 70px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 2px 6px rgba(46,157,247,0.06);
 }
 
 .grid-cell:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 201, 7, 0.35);
+  border-color: var(--cw-yellow);
+  background: #f8f8f8;
 }
 
 .water-can-wrapper {
@@ -210,9 +341,9 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70px;
-  height: 70px;
-  /* Ensure the wrapper is properly centered */
+  width: 44px;
+  height: 44px;
+}
 }
 
 .water-can {
@@ -223,7 +354,7 @@ h1 {
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
-  filter: drop-shadow(0 10px 10px rgba(31, 42, 68, 0.15));
+  filter: grayscale(1) brightness(0.1) drop-shadow(0 10px 10px rgba(31, 42, 68, 0.15));
   animation: popUp 0.5s cubic-bezier(0.17, 0.67, 0.34, 2);
   transform-origin: center;
 }
@@ -314,10 +445,10 @@ button {
 }
 
 .controls {
-  margin-top: 30px;
+  margin-top: 28px;
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 18px;
   flex-wrap: wrap;
 }
 
@@ -345,35 +476,46 @@ button:disabled {
 
 @media (max-width: 640px) {
   body {
-    padding: 14px;
+    padding: 10px;
   }
 
   .container {
-    padding: 22px 18px;
-    border-radius: 20px;
+    padding: 16px 6px;
+    border-radius: 18px;
   }
 
   .game-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
   }
 
   .brand-logo {
-    width: min(210px, 58vw);
+    width: min(180px, 60vw);
   }
 
   .stats {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
+    padding: 10px 8px;
+  }
+
+  .stat-block {
+    min-width: 60px;
   }
 
   .game-grid {
-    gap: 10px;
+    gap: 8px;
   }
 
   .water-can-wrapper {
-    width: 58px;
-    height: 58px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .controls {
+    gap: 10px;
   }
 }
 

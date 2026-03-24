@@ -24,12 +24,14 @@ const bombMessages = [
   'Wrong click. Bomb penalty: -2 score and -2s.'
 ];
 
+
 let currentCans = 0;
 let timeLeft = GAME_DURATION;
 let gameActive = false;
 let spawnInterval;
 let timerInterval;
 let celebrationTimeout;
+
 
 const grid = document.querySelector('.game-grid');
 const scoreDisplay = document.getElementById('current-cans');
@@ -39,6 +41,12 @@ const startButton = document.getElementById('start-game');
 const resetButton = document.getElementById('reset-game');
 const gameContainer = document.querySelector('.container');
 const confettiLayer = document.querySelector('.confetti-layer');
+ 
+// Audio elements
+const audioCollect = document.getElementById('audio-collect');
+const audioBomb = document.getElementById('audio-bomb');
+const audioWin = document.getElementById('audio-win');
+const audioTick = document.getElementById('audio-tick');
 
 // Creates the 3x3 game grid where items will appear
 function createGrid() {
@@ -55,31 +63,31 @@ createGrid();
 
 // Spawns a new item in a random grid cell
 function spawnWaterCan() {
-  if (!gameActive) return; // Stop if the game is not active
+  if (!gameActive) return;
   const cells = document.querySelectorAll('.grid-cell');
-  
-  // Clear all cells before spawning a new water can
+  // Clear all cells before spawning
   cells.forEach(cell => (cell.innerHTML = ''));
 
-  // Select a random cell from the grid to place the water can
-  const randomCell = cells[Math.floor(Math.random() * cells.length)];
-  const shouldSpawnBomb = Math.random() < BOMB_SPAWN_CHANCE;
-
-  if (shouldSpawnBomb) {
-    randomCell.innerHTML = `
-      <div class="water-can-wrapper">
-        <div class="bomb" aria-label="Bomb. Avoid clicking" role="button"></div>
-      </div>
-    `;
-    return;
-  }
-
-  // Use a template literal to create the wrapper and water-can element
-  randomCell.innerHTML = `
+  // Place water can in a random cell
+  const canIndex = Math.floor(Math.random() * cells.length);
+  cells[canIndex].innerHTML = `
     <div class="water-can-wrapper">
       <div class="water-can" aria-label="Collect water can" role="button"></div>
     </div>
   `;
+
+  // With chance, place a bomb in a different random cell
+  if (Math.random() < BOMB_SPAWN_CHANCE) {
+    let bombIndex;
+    do {
+      bombIndex = Math.floor(Math.random() * cells.length);
+    } while (bombIndex === canIndex);
+    cells[bombIndex].innerHTML = `
+      <div class="water-can-wrapper">
+        <div class="bomb" aria-label="Bomb. Avoid clicking" role="button"></div>
+      </div>
+    `;
+  }
 }
 
 function updateScoreDisplay() {
@@ -137,6 +145,20 @@ function celebrateWin() {
   }, 3200);
 }
 
+function playSoundAlways(audioElem) {
+  if (!audioElem) return;
+  try {
+    // Clone and play to allow overlapping sounds
+    const clone = audioElem.cloneNode();
+    clone.volume = audioElem.volume;
+    clone.play();
+  } catch (e) {
+    // fallback: reset and play original
+    audioElem.currentTime = 0;
+    audioElem.play();
+  }
+}
+
 function handleCanClick(event) {
   if (!gameActive) {
     return;
@@ -149,7 +171,7 @@ function handleCanClick(event) {
     updateTimerDisplay();
     setMessage(getRandomMessage(bombMessages), 'is-penalty');
     event.target.closest('.grid-cell').innerHTML = '';
-
+    playSoundAlways(audioBomb);
     if (timeLeft <= 0) {
       endGame();
     }
@@ -163,13 +185,17 @@ function handleCanClick(event) {
   currentCans += 1;
   updateScoreDisplay();
   event.target.closest('.grid-cell').innerHTML = '';
+  playSoundAlways(audioCollect);
 }
 
 function runTimer() {
   timerInterval = setInterval(() => {
     timeLeft -= 1;
     updateTimerDisplay();
-
+    if (audioTick && gameActive && timeLeft > 0) {
+      audioTick.currentTime = 0;
+      audioTick.play();
+    }
     if (timeLeft <= 0) {
       endGame();
     }
@@ -209,8 +235,13 @@ function endGame() {
     didWin ? 'is-win' : 'is-loss'
   );
 
+
   if (didWin) {
     celebrateWin();
+    if (audioWin) {
+      audioWin.currentTime = 0;
+      audioWin.play();
+    }
   }
 
   startButton.disabled = false;
